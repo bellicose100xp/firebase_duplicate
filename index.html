@@ -1,22 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp">
 <head lang="en">
     <meta charset="UTF-8">
     <title>Prevent Duplicates in Input</title>
 
-    <link href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <link href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
 
     <script src="app/app.js"></script>
 
 </head>
-<body>
+<body ng-controller="myController">
+
+<form name="productForm">
+<input name="style" type="text" ng-model="product.style" check-duplicate>
+<span style="color:red" ng-show="productForm.style.$dirty && productForm.style.isDuplicateValue">Style Already Present</span>
+    <button ng-click="checkDuplicate()">Check Duplicate</button> {{isDuplicate}}
+    <button ng-click="addStyle()">Add</button>
+
+</form>
+<br>
+<table class="table">
+    <thead>
+        <th>Style</th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in allStyles">
+            <td>{{item.style}}</td>
+            <td><button ng-click="allStyles.$remove(item)">Delete</button> </td>
+        </tr>
+    </tbody>
+</table>
 
 </body>
 </html>
