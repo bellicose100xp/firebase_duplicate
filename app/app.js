@@ -15,7 +15,7 @@
                 if (isValid) {
                     myFactory.addData($scope.product);
                     $scope.product.style = '';
-                    console.log('Product added');
+                    //console.log('Product added');
                     $scope.productForm.$setUntouched();
                     $scope.productForm.$setPristine();
                 }
