@@ -3,31 +3,31 @@
  */
 (function () {
     angular
-        .module('myApp', ['firebase'])
+        .module('myApp', ['firebase','ngMessages'])
         .constant('url', 'https://buggy-d.firebaseio.com/products/')
         .controller('myController', function ($scope, myFactory) {
             $scope.product = {};
             $scope.product.style = '';
             $scope.isDuplicate = "";
 
-            $scope.addStyle = function () {
-                myFactory.addData($scope.product);
-                $scope.product.style = '';
-            };
+            //$scope.addStyle = function () {
+            //    myFactory.addData($scope.product);
+            //    $scope.product.style = '';
+            //};
 
             $scope.allStyles = myFactory.getData();
 
             $scope.checkDuplicate = function () {
-                console.log($scope.allStyles.length);
                 for (var i = 0; i < $scope.allStyles.length; i++) {
                     console.log("comparing db: " +  $scope.allStyles[i].style + " to " + $scope.product.style);
                     if ($scope.allStyles[i].style == $scope.product.style) {
-                        $scope.isDuplicate = "duplicate value";
+                        $scope.isDuplicate = "duplicate value, Style Not Added";
                         return;
                     }
                 }
-                $scope.isDuplicate = "Not a Duplicate Value";
-                return;
+                $scope.isDuplicate = "New Style Added " + $scope.product.style;
+                myFactory.addData($scope.product);
+                $scope.product.style = '';
             }
 
         })
@@ -51,25 +51,28 @@
                     return data;
                 },
 
-                isDuplicate: function (styleVal) {
-                    for (product in data) {
-                        if (product.style == styleVal) {
+                isDuplicate: function (style) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].style === style) {
+                            console.log("duplicate value found");
                             return true;
                         }
                     }
+                    console.log("unique value");
                     return false;
-
                 }
             }
         })
             .directive('checkDuplicate', function (myFactory) {
             return {
                 require: 'ngModel',
-                link: function(scope, elem, attr, ngModel){
+                link: function(scope, element, attrs, ngModel){
 
-                    elem.bind('blur', function () {
+                    element.on('blur', function () {
                         var duplicate = myFactory.isDuplicate(ngModel.$viewValue);
+                        //console.log("duplicate variable: " + duplicate);
                         ngModel.$setValidity('isDuplicateValue',!duplicate);
+                        //console.log(ngModel);
                     });
                 }
             }

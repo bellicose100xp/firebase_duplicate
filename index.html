@@ -12,18 +12,24 @@
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
+    <script src="bower_components/angular/angular-messages.js"></script>
 
     <script src="app/app.js"></script>
 
 </head>
 <body ng-controller="myController">
 
-<form name="productForm">
-<input name="style" type="text" ng-model="product.style" check-duplicate>
-<span style="color:red" ng-show="productForm.style.$dirty && productForm.style.isDuplicateValue">Style Already Present</span>
-    <button ng-click="checkDuplicate()">Check Duplicate</button> {{isDuplicate}}
-    <button ng-click="addStyle()">Add</button>
+<form name="productForm" novalidate>
+<input name="style" id="style" type="text" ng-model="product.style" check-duplicate required>
+    <span ng-messages="productForm.style.$touched && productForm.style.$error">
+        <span ng-message="isDuplicateValue"> Is Duplicate Value </span>
+        <span ng-message="required"> Style is Required </span>
+    </span>
 
+<span style="color:red" ng-show="productForm.style.$touched && productForm.style.isDuplicateValue"> Style Already Present </span>
+    <button ng-click="checkDuplicate()">Check Duplicate and add product</button> {{isDuplicate}}
+    <!--<button ng-click="addStyle()">Add</button>-->
+{{productForm.style.$error | json}}
 </form>
 <br>
 <table class="table">
