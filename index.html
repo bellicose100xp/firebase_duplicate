@@ -6,6 +6,7 @@
 
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="app/app.css" rel="stylesheet">
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -19,17 +20,21 @@
 </head>
 <body ng-controller="myController">
 
-<form name="productForm" novalidate>
-<input name="style" id="style" type="text" ng-model="product.style" check-duplicate required>
-    <span ng-messages="productForm.style.$touched && productForm.style.$error">
-        <span ng-message="isDuplicateValue"> Is Duplicate Value </span>
-        <span ng-message="required"> Style is Required </span>
-    </span>
+<form name="productForm" ng-submit="addStyle(productForm.$valid)" novalidate>
+<input name="style" id="style" type="text" ng-model="product.style" capitalize check-duplicate required>
 
-<span style="color:red" ng-show="productForm.style.$touched && productForm.style.isDuplicateValue"> Style Already Present </span>
-    <button ng-click="checkDuplicate()">Check Duplicate and add product</button> {{isDuplicate}}
-    <!--<button ng-click="addStyle()">Add</button>-->
-{{productForm.style.$error | json}}
+    <!--<button ng-click="checkDuplicate()">Check Duplicate and add product</button> {{isDuplicate}}-->
+<button type="submit">Add Style</button>
+
+        <span ng-messages="productForm.style.$error">
+        <span class="my-danger" ng-message="isDuplicateValue"> Duplicate Warning: {{product.style}} is already present in the System </span>
+        </span>
+
+        <span ng-messages="productForm.style.$touched && productForm.style.$error">
+        <span class="my-warning" ng-message="required"> Style is Required </span>
+        </span>
+
+    <!--{{productForm.style.$error | json}}-->
 </form>
 <br>
 <table class="table">

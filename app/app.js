@@ -3,32 +3,42 @@
  */
 (function () {
     angular
-        .module('myApp', ['firebase','ngMessages'])
+        .module('myApp', ['firebase', 'ngMessages'])
         .constant('url', 'https://buggy-d.firebaseio.com/products/')
         .controller('myController', function ($scope, myFactory) {
             $scope.product = {};
             $scope.product.style = '';
-            $scope.isDuplicate = "";
+            //$scope.isDuplicate = "";
 
-            //$scope.addStyle = function () {
-            //    myFactory.addData($scope.product);
-            //    $scope.product.style = '';
-            //};
+            $scope.addStyle = function (isValid) {
+
+                if (isValid) {
+                    myFactory.addData($scope.product);
+                    $scope.product.style = '';
+                    console.log('Product added');
+                    $scope.productForm.$setUntouched();
+                    $scope.productForm.$setPristine();
+                }
+                else {
+                    console.log("product not added");
+                }
+
+            };
 
             $scope.allStyles = myFactory.getData();
 
-            $scope.checkDuplicate = function () {
-                for (var i = 0; i < $scope.allStyles.length; i++) {
-                    console.log("comparing db: " +  $scope.allStyles[i].style + " to " + $scope.product.style);
-                    if ($scope.allStyles[i].style == $scope.product.style) {
-                        $scope.isDuplicate = "duplicate value, Style Not Added";
-                        return;
-                    }
-                }
-                $scope.isDuplicate = "New Style Added " + $scope.product.style;
-                myFactory.addData($scope.product);
-                $scope.product.style = '';
-            }
+            //$scope.checkDuplicate = function () {
+            //    for (var i = 0; i < $scope.allStyles.length; i++) {
+            //        console.log("comparing db: " +  $scope.allStyles[i].style + " to " + $scope.product.style);
+            //        if ($scope.allStyles[i].style == $scope.product.style) {
+            //            $scope.isDuplicate = "duplicate value, Style Not Added";
+            //            return;
+            //        }
+            //    }
+            //    $scope.isDuplicate = "New Style Added " + $scope.product.style;
+            //    myFactory.addData($scope.product);
+            //    $scope.product.style = '';
+            //}
 
         })
         .factory('myFactory', function ($firebase, url) {
@@ -54,28 +64,57 @@
                 isDuplicate: function (style) {
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].style === style) {
-                            console.log("duplicate value found");
+                            //console.log("duplicate value found");
                             return true;
                         }
                     }
-                    console.log("unique value");
+                    //console.log("unique value");
                     return false;
                 }
             }
         })
-            .directive('checkDuplicate', function (myFactory) {
+        .directive('checkDuplicate', function (myFactory) {
             return {
                 require: 'ngModel',
-                link: function(scope, element, attrs, ngModel){
+                scope: {},
+                link: function (scope, element, attrs, ngModel) {
 
-                    element.on('blur', function () {
-                        var duplicate = myFactory.isDuplicate(ngModel.$viewValue);
-                        //console.log("duplicate variable: " + duplicate);
-                        ngModel.$setValidity('isDuplicateValue',!duplicate);
-                        //console.log(ngModel);
-                    });
+                    //element.on('blur', function () {
+                    //    var duplicate = myFactory.isDuplicate(ngModel.$viewValue);
+                    //    //console.log("duplicate variable: " + duplicate);
+                    //    ngModel.$setValidity('isDuplicateValue',!duplicate);
+                    //    //console.log(ngModel);
+                    //});
+
+                    // for ngModel $viewChangeListeners can be used instead of $watch by pushing a function
+                    ngModel.$viewChangeListeners.push(function () {
+                            var duplicate = myFactory.isDuplicate(ngModel.$viewValue);
+                            ngModel.$setValidity('isDuplicateValue', !duplicate);
+                            //console.log("duplicate variable: " + duplicate);
+                            //console.log(ngModel);
+                        }
+                    );
+
                 }
             }
         })
+        .directive('capitalize', function () {
+            return {
+                require: 'ngModel',
+                link: function (scope, element, attrs, modelCtrl) {
+                    var capitalize = function (inputValue) {
+                        if (inputValue == undefined) inputValue = '';
+                        var capitalized = inputValue.toUpperCase();
+                        if (capitalized !== inputValue) {
+                            modelCtrl.$setViewValue(capitalized);
+                            modelCtrl.$render();
+                        }
+                        return capitalized;
+                    };
+                    modelCtrl.$parsers.push(capitalize);
+                    capitalize(scope[attrs.ngModel]);  // capitalize initial value
+                }
+            };
+        });
 
-        }());
+}());

@@ -1,0 +1,11 @@
+.my-danger {
+    background-color: red;
+    color: #ffffff;
+    padding: 3px;
+}
+
+.my-warning {
+    background-color: orange;
+    color: #ffffff;
+    padding: 3px;
+}
