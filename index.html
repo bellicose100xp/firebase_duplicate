@@ -33,7 +33,7 @@
     <select name="categoryOptions" id="categoryOptions" ng-model="product.category" ng-options="categoryOption.name for categoryOption in categoryOptions" required>
         <option value="" disabled selected style="display: none;">Select a category...</option>
     </select>
-    <!--{{product.category}}-->
+    {{product.category.name}}
     <!--<button ng-click="checkDuplicate()">Check Duplicate and add product</button> {{isDuplicate}}-->
 <button type="submit">Add Style</button>
 
@@ -60,7 +60,9 @@
         <th>Retail</th>
     </thead>
     <tbody>
-        <tr ng-repeat="item in allStyles">
+        <tr ng-repeat="item in allStyles | filter: {
+        style: product.style || '',
+        category: {name: product.category.name || ''}}">
             <td>{{item.style}}</td>
             <td style="width: 30px">{{item.category.name}}</td>
             <td style="background-color: {{item.category.color}};width: 20px"></td>
