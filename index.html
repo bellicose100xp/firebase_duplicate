@@ -64,7 +64,7 @@
         <th>Style</th>
         <th>Category</th>
         <th>Color</th>
-        <th>Retail</th>
+        <th style="width: 15%;text-align: right">Retail</th>
     </thead>
     <tbody>
         <tr ng-repeat="item in allStyles | filter: {
@@ -73,7 +73,7 @@
             <td>{{item.style}}</td>
             <td style="width: 30px">{{item.category.name}}</td>
             <td style="background-color: {{item.category.color}};width: 20px"></td>
-            <td>{{item.category.retail | currency}}</td>
+            <td style="text-align: right;width: 15%">{{item.category.retail | currency}}</td>
             <td><button ng-click="allStyles.$remove(item)">Delete</button> </td>
         </tr>
     </tbody>
