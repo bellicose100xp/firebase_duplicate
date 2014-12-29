@@ -3,7 +3,7 @@
  */
 angular
     .module('myApp')
-    .controller('myController', function ($scope, myFactory) {
+    .controller('mainController', function ($scope, myFactory) {
         $scope.product = {};
         $scope.product.style = '';
         //$scope.isDuplicate = "";

@@ -1,0 +1,55 @@
+<div class="container">
+    <h2> Style & Category Matrix</h2>
+    <br>
+    <form name="productForm" ng-submit="addStyle(productForm.$valid)" novalidate>
+
+        <!--style entry-->
+        <label for="style">Style</label>
+        <input name="style" id="style" type="text" ng-model="product.style" capitalize check-duplicate required>
+
+        <!--Category Entry-->
+        <label for="categoryOptions">Category</label>
+        <select name="categoryOptions" id="categoryOptions" ng-model="product.category" ng-options="categoryOption.name for categoryOption in categoryOptions" required>
+            <!--<option value="" disabled selected style="display: none;">Select a category...</option>-->
+            <!--can only add one hard coded option inside ng-options-->
+            <option value="" selected>Select a category...</option>
+        </select>
+        <!--{{product.category.name}}-->
+        <!--<button ng-click="checkDuplicate()">Check Duplicate and add product</button> {{isDuplicate}}-->
+        <button type="submit">Add Style</button>
+
+        <span ng-messages="productForm.style.$error">
+        <span class="my-danger" ng-message="isDuplicateValue"> Duplicate Warning: {{product.style}} is already present in the System </span>
+        </span>
+
+        <span ng-messages="productForm.style.$touched && productForm.style.$error">
+        <span class="my-warning" ng-message="required"> Style is Required </span>
+        </span>
+
+    <span ng-messages="productForm.categoryOptions.$touched && productForm.categoryOptions.$error">
+        <span class="my-warning" ng-message="required"> You must select a category... </span>
+        </span>
+
+        <!--{{productForm.style.$error | json}}-->
+    </form>
+    <br>
+    <table class="table">
+        <thead>
+        <th>Style</th>
+        <th>Category</th>
+        <th>Color</th>
+        <th style="width: 15%;text-align: right">Retail</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in allStyles | filter: {
+        style: product.style || '',
+        category: {name: product.category.name || ''}}">
+            <td>{{item.style}}</td>
+            <td style="width: 30px">{{item.category.name}}</td>
+            <td style="background-color: {{item.category.color}};width: 20px"></td>
+            <td style="text-align: right;width: 15%">{{item.category.retail | currency}}</td>
+            <td><button ng-click="allStyles.$remove(item)">Delete</button> </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
