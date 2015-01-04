@@ -1,11 +1,11 @@
 <div class="container">
-    <h2> Style & Category Matrix</h2>
+    <h2> Add Style & Category Matrix</h2>
     <br>
-    <form name="productForm" novalidate>
+    <form name="productForm" ng-submit="addStyle(productForm.$valid)" novalidate>
 
         <!--style entry-->
         <label for="style">Style</label>
-        <input name="style" id="style" type="text" ng-model="product.style" capitalize>
+        <input name="style" id="style" type="text" ng-model="product.style" capitalize check-duplicate required>
 
         <!--Category Entry-->
         <label for="categoryOptions">Category</label>
@@ -14,8 +14,21 @@
             <!--can only add one hard coded option inside ng-options-->
             <option value="" selected>Select a category...</option>
         </select>
+        <!--{{product.category.name}}-->
+        <!--<button ng-click="checkDuplicate()">Check Duplicate and add product</button> {{isDuplicate}}-->
+        <button type="submit">Add Style</button>
 
-        <button type="reset" ng-click="product.style='';product.category=''">Clear</button>
+        <span ng-messages="productForm.style.$error">
+        <span class="my-danger" ng-message="isDuplicateValue"> Duplicate Warning: {{product.style}} is already present in the System </span>
+        </span>
+
+        <span ng-messages="productForm.style.$touched && productForm.style.$error">
+        <span class="my-warning" ng-message="required"> Style is Required </span>
+        </span>
+
+    <span ng-messages="productForm.categoryOptions.$touched && productForm.categoryOptions.$error">
+        <span class="my-warning" ng-message="required"> You must select a category... </span>
+        </span>
 
         <!--{{productForm.style.$error | json}}-->
     </form>
