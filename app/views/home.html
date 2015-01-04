@@ -6,7 +6,7 @@
 
         <!--style entry-->
         <label for="style">Style</label>
-        <input name="style" id="style" type="text" ng-model="product.style" capitalize>
+        <input name="style" id="style" type="text" ng-model="product.style" capitalize check-style-in-database>
 
         <!--Category Entry-->
         <label for="categoryOptions">Category</label>
@@ -19,6 +19,10 @@
 
         <button type="reset" ng-click="product.style='';product.category=''">Clear</button>
 
+        <span ng-messages="productForm.style.$error">
+        <span class="my-danger" ng-message="notPresentInDatabase"> Information for {{product.style}} is not in available. Contact Hollywood. </span>
+        </span>
+
         <!--{{productForm.style.$error | json}}-->
     </form>
     <br>
@@ -28,15 +32,17 @@
         <th>Category</th>
         <th>Color</th>
         <th style="width: 15%;text-align: right">Retail</th>
+        <th>Date Added</th>
         </thead>
         <tbody>
         <tr ng-repeat="item in allStyles | filter: {
         style: product.style || '',
-        category: {name: product.category.name || ''}}">
+        category: {name: product.category.name || ''}} | limitTo: 10 | orderBy:'dateAdded':true">
             <td>{{item.style}}</td>
             <td style="">{{item.category.name}}</td>
             <td style="background-color: {{item.category.color}};width: 20px"></td>
             <td style="text-align: right;width: 15%">{{item.category.retail | currency}}</td>
+            <td>{{item.dateAdded | date:'short'}}</td>
         </tr>
         </tbody>
     </table>

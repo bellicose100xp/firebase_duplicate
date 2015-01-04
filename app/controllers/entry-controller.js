@@ -20,6 +20,9 @@ angular
 
             if (isValid) {
 
+                $scope.product.dateAdded = Firebase.ServerValue.TIMESTAMP;
+                $scope.product.addedBy = $scope.user;
+
                 myFactory.addData($scope.product);
 
                 $scope.product.style = '';

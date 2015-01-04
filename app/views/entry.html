@@ -39,16 +39,20 @@
         <th>Category</th>
         <th>Color</th>
         <th style="width: 15%;text-align: right">Retail</th>
+        <th>Date Added</th>
+        <th>Added By</th>
         </thead>
         <tbody>
         <tr ng-repeat="item in allStyles | filter: {
         style: product.style || '',
-        category: {name: product.category.name || ''}}">
+        category: {name: product.category.name || ''}} | limitTo: 10 | orderBy:'dateAdded':true">
             <td>{{item.style}}</td>
             <td style="width: 30px">{{item.category.name}}</td>
             <td style="background-color: {{item.category.color}};width: 20px"></td>
             <td style="text-align: right;width: 15%">{{item.category.retail | currency}}</td>
-            <td><button ng-click="allStyles.$remove(item)">Delete</button> </td>
+            <td>{{item.dateAdded | date:'short'}}</td>
+            <td>{{item.addedBy}}</td>
+            <td><button ng-click="allStyles.$remove(item)" require-confirmation>Delete</button> </td>
         </tr>
         </tbody>
     </table>
