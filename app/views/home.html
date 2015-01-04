@@ -1,6 +1,7 @@
 <div class="container">
-    <h2> Style & Category Matrix</h2>
+    <h2> Style & Category Matrix <a class="h4 text-danger" ng-href="#entry"> Add Styles </a> </h2>
     <br>
+
     <form name="productForm" novalidate>
 
         <!--style entry-->
@@ -9,7 +10,8 @@
 
         <!--Category Entry-->
         <label for="categoryOptions">Category</label>
-        <select name="categoryOptions" id="categoryOptions" ng-model="product.category" ng-options="categoryOption.name for categoryOption in categoryOptions" required>
+        <select name="categoryOptions" id="categoryOptions" ng-model="product.category"
+                ng-options="categoryOption.name for categoryOption in categoryOptions" required>
             <!--<option value="" disabled selected style="display: none;">Select a category...</option>-->
             <!--can only add one hard coded option inside ng-options-->
             <option value="" selected>Select a category...</option>
@@ -32,10 +34,9 @@
         style: product.style || '',
         category: {name: product.category.name || ''}}">
             <td>{{item.style}}</td>
-            <td style="width: 30px">{{item.category.name}}</td>
+            <td style="">{{item.category.name}}</td>
             <td style="background-color: {{item.category.color}};width: 20px"></td>
             <td style="text-align: right;width: 15%">{{item.category.retail | currency}}</td>
-            <td><button ng-click="allStyles.$remove(item)">Delete</button> </td>
         </tr>
         </tbody>
     </table>

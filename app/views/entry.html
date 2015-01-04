@@ -1,4 +1,5 @@
 <div class="container">
+    <div class="text-center">Logged in as {{user}} | <a ng-href="#/" ng-click="auth.$unauth()">Logout</a> </div>
     <h2> Add Style & Category Matrix</h2>
     <br>
     <form name="productForm" ng-submit="addStyle(productForm.$valid)" novalidate>
@@ -14,8 +15,7 @@
             <!--can only add one hard coded option inside ng-options-->
             <option value="" selected>Select a category...</option>
         </select>
-        <!--{{product.category.name}}-->
-        <!--<button ng-click="checkDuplicate()">Check Duplicate and add product</button> {{isDuplicate}}-->
+
         <button type="submit">Add Style</button>
 
         <span ng-messages="productForm.style.$error">

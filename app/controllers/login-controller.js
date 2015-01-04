@@ -9,7 +9,7 @@
 
     angular
         .module('myApp')
-        .controller('loginController', function ($firebaseAuth, url, $location) {
+        .controller('loginController', function (auth, $location) {
 
             var lc = this;
 
@@ -17,8 +17,7 @@
             lc.errorMessage = null;
             lc.needsValidation = null;
 
-            var ref = new Firebase(url);
-            lc.authObj = $firebaseAuth(ref);
+            lc.authObj = auth;
 
             lc.login = function ($isValid) {
 
@@ -36,7 +35,7 @@
                         .then(function (authData) {
                             lc.authData = authData;
                             console.log('logged in as:', authData.password.email);
-                            $location.path("/");
+                            $location.path("/entry");
                         })
                         .catch(function (error) {
                             lc.errorMessage = error.toString();
