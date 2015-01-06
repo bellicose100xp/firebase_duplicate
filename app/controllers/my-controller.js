@@ -3,12 +3,16 @@
  */
 angular
     .module('myApp')
-    .controller('mainController', function ($scope, colors, myFactory) {
+    .controller('mainController', function ($scope, colors, myFactory, $location) {
         $scope.product = {};
         $scope.product.style = '';
 
         $scope.categoryOptions = colors;
 
         $scope.allStyles = myFactory.getData();
+
+        $scope.enterData = function () {
+            $location.path('/entry');
+        };
 
     });

@@ -45,7 +45,7 @@
         <tbody>
         <tr ng-repeat="item in allStyles | filter: {
         style: product.style || '',
-        category: {name: product.category.name || ''}} | limitTo: 10 | orderBy:'dateAdded':true">
+        category: {name: product.category.name || ''}} | orderBy:'dateAdded':true | limitTo: 20">
             <td>{{item.style}}</td>
             <td style="width: 30px">{{item.category.name}}</td>
             <td style="background-color: {{item.category.color}};width: 20px"></td>

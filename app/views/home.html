@@ -1,43 +1,32 @@
 <div class="container">
-    <h2> Style & Category Matrix <a class="h4 text-danger" ng-href="#entry"> Add Styles </a> </h2>
+    <h2> Style & Category Matrix </h2>
     <br>
 
     <form name="productForm" novalidate>
 
         <!--style entry-->
         <label for="style">Style</label>
-        <input name="style" id="style" type="text" ng-model="product.style" capitalize check-style-in-database>
+        <input name="style" id="style" type="text" ng-model="product.style" capitalize>
 
-        <!--Category Entry-->
-        <label for="categoryOptions">Category</label>
-        <select name="categoryOptions" id="categoryOptions" ng-model="product.category"
-                ng-options="categoryOption.name for categoryOption in categoryOptions" required>
-            <!--<option value="" disabled selected style="display: none;">Select a category...</option>-->
-            <!--can only add one hard coded option inside ng-options-->
-            <option value="" selected>Select a category...</option>
-        </select>
+        <button type="reset" ng-click="product.style=''">Clear</button>
+        <button ng-click="enterData()">Add Styles</button>
 
-        <button type="reset" ng-click="product.style='';product.category=''">Clear</button>
-
-        <span ng-messages="productForm.style.$error">
-        <span class="my-danger" ng-message="notPresentInDatabase"> Information for {{product.style}} is not in available. Contact Hollywood. </span>
-        </span>
-
-        {{productForm.style.$error | json}}
     </form>
+
     <br>
+
     <table class="table">
         <thead>
         <th>Style</th>
         <th>Category</th>
         <th>Color</th>
         <th style="width: 15%;text-align: right">Retail</th>
-        <th>Date Added</th>
+        <th>Last Updated</th>
         </thead>
         <tbody>
         <tr ng-repeat="item in allStyles | filter: {
         style: product.style || '',
-        category: {name: product.category.name || ''}} | limitTo: 10 | orderBy:'dateAdded':true">
+        category: {name: product.category.name || ''}} | orderBy:'dateAdded':true | limitTo: 20">
             <td>{{item.style}}</td>
             <td style="">{{item.category.name}}</td>
             <td style="background-color: {{item.category.color}};width: 20px"></td>
