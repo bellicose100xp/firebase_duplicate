@@ -10,7 +10,7 @@
 
         <!--Category Entry-->
         <label for="categoryOptions">Category</label>
-        <select name="categoryOptions" id="categoryOptions" ng-model="product.category" ng-options="categoryOption.name for categoryOption in categoryOptions" required>
+        <select name="categoryOptions" id="categoryOptions" ng-model="product.category" ng-options="(categoryOption.name + '  $' + categoryOption.retail) for categoryOption in categoryOptions" required>
             <!--<option value="" disabled selected style="display: none;">Select a category...</option>-->
             <!--can only add one hard coded option inside ng-options-->
             <option value="" selected>Select a category...</option>
