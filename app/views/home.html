@@ -26,13 +26,19 @@
         <tbody>
         <tr ng-repeat="item in allStyles | filter: {
         style: product.style || '',
-        category: {name: product.category.name || ''}} | orderBy:'dateAdded':true | limitTo: 20">
+        category: {name: product.category.name || ''}} | orderBy:'dateAdded':true | limitTo: 20"
+            ng-click="setSelected($index)"
+            ng-class="{hovering: hoverState,
+                       selected: $index === clickedRow,
+                       'selected-and-hovering':hoverState && $index === clickedRow}"
+                ng-mouseenter="hoverState = true"
+                ng-mouseleave="hoverState = false">
             <td>{{item.style}}</td>
             <td style="">{{item.category.name}}</td>
             <td style="background-color: {{item.category.color}};width: 20px"></td>
             <td style="text-align: right;width: 15%">{{item.category.retail | currency}}</td>
             <td>{{item.dateAdded | date:'short'}}</td>
-        </tr>
+            </tr>
         </tbody>
     </table>
 </div>

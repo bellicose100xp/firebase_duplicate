@@ -13,3 +13,15 @@
 .test {
     background-color: gold;
 }
+
+.selected {
+    background-color: lightsalmon;
+}
+
+.hovering {
+    background-color: lightyellow;
+}
+
+.selected-and-hovering {
+    background-color: lightsalmon;
+}

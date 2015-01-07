@@ -15,4 +15,17 @@ angular
             $location.path('/entry');
         };
 
+        $scope.clickedRow = null;
+
+        $scope.setSelected = function (clickedId) {
+            if($scope.clickedRow === clickedId) {
+                $scope.clickedRow = null;
+            }
+            else {
+                $scope.clickedRow = clickedId;
+            }
+        };
+
+        $scope.hoverState = null;
+
     });
