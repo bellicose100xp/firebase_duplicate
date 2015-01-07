@@ -2,20 +2,20 @@
     <h2> Style & Category Matrix </h2>
     <br>
 
-    <form name="productForm" ng-submit="" novalidate>
-
+    <form class="form-inline" name="productForm" ng-submit="" novalidate>
+        <div class="form-group">
         <!--style entry-->
-        <label for="style">Style</label>
-        <input name="style" id="style" type="text" ng-model="product.style" capitalize>
+        <label class="sr-only" for="style">Style</label>
+        <input class="form-control" name="style" id="style" type="text" placeholder="Style-Model" ng-model="product.style" capitalize>
 
         <button type="reset" ng-click="product.style=''">Clear</button>
         <button type="button" ng-click="enterData()">Add Styles</button>
-
+        </div>
     </form>
 
     <br>
 
-    <table class="table">
+    <table class="table table-responsive">
         <thead>
         <th>Style</th>
         <th>Category</th>
