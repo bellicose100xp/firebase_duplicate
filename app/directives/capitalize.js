@@ -6,17 +6,17 @@ angular
     .directive('capitalize', function () {
         return {
             require: 'ngModel',
-            link: function (scope, element, attrs, modelCtrl) {
+            link: function (scope, element, attrs, ngModel) {
                 var capitalize = function (inputValue) {
                     if (inputValue == undefined) inputValue = '';
                     var capitalized = inputValue.toUpperCase();
                     if (capitalized !== inputValue) {
-                        modelCtrl.$setViewValue(capitalized);
-                        modelCtrl.$render();
+                        ngModel.$setViewValue(capitalized);
+                        ngModel.$render();
                     }
                     return capitalized;
                 };
-                modelCtrl.$parsers.push(capitalize);
+                ngModel.$parsers.push(capitalize);
                 capitalize(scope[attrs.ngModel]);  // capitalize initial value
             }
         };
